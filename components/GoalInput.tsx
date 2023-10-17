@@ -1,13 +1,21 @@
+/* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
 import {
   Button,
   GestureResponderEvent,
+  Image,
+  Modal,
   StyleSheet,
   TextInput,
   View,
 } from 'react-native';
 
-const GoalInput = props => {
+const GoalInput = (props: {
+  onAddGoal: (enteredGoal: string) => void;
+  showModal: boolean;
+  endAddGoalHandler: () => void;
+}) => {
+  // const [showModal, setShowModal] = useState<boolean>(true)
   const [enteredGoalText, setEnteredGoalText] = useState<string>('');
 
   const goalInputHandler = (enteredText: string) => {
@@ -20,35 +28,69 @@ const GoalInput = props => {
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Your course goal"
-        onChangeText={goalInputHandler}
-        value={enteredGoalText}
-      />
-      <Button title="Add Goal" onPress={addGoalHandler} />
-    </View>
+    <Modal visible={props.showModal} animationType="slide">
+      <View style={styles.inputContainer}>
+        <Image
+          style={styles.image}
+          source={require('../src/assets/images/goal.png')}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Your course goal"
+          onChangeText={goalInputHandler}
+          value={enteredGoalText}
+        />
+        <View style={styles.buttonsView}>
+          <View style={styles.button}>
+            <Button
+              title="Dismiss"
+              onPress={props.endAddGoalHandler}
+              color={'#f31282'}
+            />
+          </View>
+          <View style={styles.button}>
+            <Button
+              title="Add Goal"
+              onPress={addGoalHandler}
+              color={'#b180f0'}
+            />
+          </View>
+        </View>
+      </View>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#311b6b',
+  },
+  buttonsView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: '#cccccc',
   },
   textInput: {
     borderWidth: 1,
-    borderColor: '#cccccc',
+    borderColor: '#e4d0ff',
+    backgroundColor: '#e4d0ff',
+    color: '#120438',
     padding: 8,
-    marginRight: 8,
     borderRadius: 5,
-    width: '70%',
+    width: '100%',
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 20,
+  },
+  button: {
+    margin: 24,
   },
 });
 

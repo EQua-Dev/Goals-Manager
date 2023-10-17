@@ -1,4 +1,5 @@
 {
   "name": "GoalsManager",
-  "displayName": "GoalsManager"
+  "displayName": "GoalsManager",
+  "backgroundColor":"#1e085a"
 }
